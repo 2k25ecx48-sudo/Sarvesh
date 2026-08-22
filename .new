@@ -1,0 +1,3938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Dayflow - Human Resource Management System</title>
+
+<!-- EMAILJS -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#f3f6fb;
+    color:#1e293b;
+}
+
+button,
+input,
+select,
+textarea{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+/* ================= LOGIN ================= */
+
+.login-page{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#172554,#3155d9);
+    padding:20px;
+}
+
+.login-box{
+    width:430px;
+    max-width:100%;
+    background:white;
+    padding:35px;
+    border-radius:20px;
+    box-shadow:0 20px 50px rgba(0,0,0,.25);
+}
+
+.logo{
+    font-size:34px;
+    font-weight:bold;
+    color:#3155d9;
+}
+
+.tagline{
+    color:#777;
+    margin-top:5px;
+    margin-bottom:25px;
+}
+
+.form-group{
+    margin-bottom:16px;
+}
+
+.form-group label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:7px;
+}
+
+input,
+select,
+textarea{
+    width:100%;
+    padding:12px;
+    border:1px solid #d1d5db;
+    border-radius:8px;
+    outline:none;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+    border-color:#3155d9;
+}
+
+.btn{
+    border:0;
+    padding:11px 17px;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+.primary{
+    background:#3155d9;
+    color:white;
+}
+
+.success{
+    background:#16a34a;
+    color:white;
+}
+
+.danger{
+    background:#dc2626;
+    color:white;
+}
+
+.warning{
+    background:#f59e0b;
+    color:white;
+}
+
+.btn:disabled{
+    opacity:.45;
+    cursor:not-allowed;
+}
+
+.error{
+    background:#fee2e2;
+    color:#991b1b;
+    padding:10px;
+    border-radius:8px;
+    margin-bottom:15px;
+}
+
+.success-msg{
+    background:#dcfce7;
+    color:#166534;
+    padding:10px;
+    border-radius:8px;
+    margin-bottom:15px;
+}
+
+.demo{
+    margin-top:20px;
+    padding:15px;
+    background:#eef2ff;
+    border-radius:10px;
+    font-size:13px;
+    line-height:1.7;
+}
+
+/* ================= APP ================= */
+
+.app{
+    display:none;
+    min-height:100vh;
+}
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    width:245px;
+    background:#172554;
+    color:white;
+    padding:25px 15px;
+}
+
+.sidebar-logo{
+    font-size:28px;
+    font-weight:bold;
+    margin:0 10px 30px;
+}
+
+.sidebar-logo span{
+    color:#93c5fd;
+}
+
+.nav{
+    padding:13px 15px;
+    border-radius:8px;
+    margin-bottom:6px;
+    color:#dbeafe;
+    cursor:pointer;
+}
+
+.nav:hover,
+.nav.active{
+    background:#3155d9;
+    color:white;
+}
+
+.logout{
+    position:absolute;
+    left:15px;
+    right:15px;
+    bottom:25px;
+    padding:12px;
+    background:#dc2626;
+    border-radius:8px;
+    text-align:center;
+    cursor:pointer;
+}
+
+.main{
+    margin-left:245px;
+    padding:25px;
+}
+
+.topbar{
+    background:white;
+    border-radius:15px;
+    padding:18px 22px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+    box-shadow:0 3px 15px rgba(0,0,0,.05);
+}
+
+.user{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.avatar{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background:#3155d9;
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-weight:bold;
+}
+
+.section{
+    display:none;
+}
+
+.section.active{
+    display:block;
+}
+
+/* ================= CARDS ================= */
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+    margin-bottom:20px;
+}
+
+.card{
+    background:white;
+    padding:22px;
+    border-radius:15px;
+    box-shadow:0 3px 15px rgba(0,0,0,.05);
+}
+
+.card-title{
+    color:#777;
+    font-size:14px;
+    margin-bottom:8px;
+}
+
+.card-value{
+    font-size:25px;
+    font-weight:bold;
+}
+
+/* ================= PANEL ================= */
+
+.panel{
+    background:white;
+    padding:22px;
+    border-radius:15px;
+    margin-bottom:20px;
+    box-shadow:0 3px 15px rgba(0,0,0,.05);
+}
+
+.panel h3{
+    margin-bottom:18px;
+}
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,
+td{
+    padding:13px;
+    border-bottom:1px solid #e5e7eb;
+    text-align:left;
+}
+
+th{
+    background:#f8fafc;
+}
+
+.status{
+    padding:5px 10px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+    display:inline-block;
+}
+
+.pending{
+    background:#fef3c7;
+    color:#92400e;
+}
+
+.approved{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.rejected{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.present{
+    background:#dcfce7;
+    color:#166534;
+}
+
+/* ================= PROFILE ================= */
+
+.profile-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+
+.info{
+    background:#f8fafc;
+    padding:15px;
+    border-radius:8px;
+}
+
+.info small{
+    color:#777;
+}
+
+.info strong{
+    display:block;
+    margin-top:5px;
+}
+
+/* ================= ATTENDANCE ================= */
+
+.attendance-box{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+    margin-bottom:20px;
+}
+
+.big-time{
+    font-size:25px;
+    font-weight:bold;
+    margin-top:8px;
+}
+
+.button-area{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+/* ================= EMAIL BOX ================= */
+
+.email-info{
+    background:#eff6ff;
+    border-left:4px solid #3155d9;
+    padding:15px;
+    margin-top:15px;
+    border-radius:8px;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:900px){
+
+    .cards{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .attendance-box{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:700px){
+
+    .sidebar{
+        position:relative;
+        width:100%;
+    }
+
+    .logout{
+        position:relative;
+        left:auto;
+        right:auto;
+        bottom:auto;
+        margin-top:20px;
+    }
+
+    .main{
+        margin-left:0;
+    }
+
+    .cards{
+        grid-template-columns:1fr;
+    }
+
+    .profile-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<!-- =====================================================
+LOGIN PAGE
+===================================================== -->
+
+<div class="login-page" id="loginPage">
+
+<div class="login-box">
+
+<div class="logo">
+Dayflow
+</div>
+
+<div class="tagline">
+Every workday, perfectly aligned.
+</div>
+
+<h2 style="margin-bottom:20px">
+Sign In
+</h2>
+
+<div id="loginMessage"></div>
+
+<form id="loginForm">
+
+<div class="form-group">
+
+<label>Email</label>
+
+<input
+type="email"
+id="email"
+placeholder="Enter your email"
+required>
+
+</div>
+
+<div class="form-group">
+
+<label>Password</label>
+
+<input
+type="password"
+id="password"
+placeholder="Enter your password"
+required>
+
+</div>
+
+<button
+type="submit"
+class="btn primary"
+style="width:100%">
+
+Login
+
+</button>
+
+</form>
+
+
+<div class="demo">
+
+<b>HR Demo Account</b>
+
+<br>
+
+Email:
+hr@dayflow.com
+
+<br>
+
+Password:
+hr123
+
+<br><br>
+
+<b>
+HR creates employee accounts from Add Employee.
+</b>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+MAIN APP
+===================================================== -->
+
+<div class="app" id="app">
+
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+<div class="sidebar-logo">
+
+Day<span>flow</span>
+
+</div>
+
+
+<div
+class="nav active"
+onclick="showSection('dashboard',this)">
+
+🏠 Dashboard
+
+</div>
+
+
+<div
+class="nav"
+onclick="showSection('profile',this)">
+
+👤 My Profile
+
+</div>
+
+
+<!-- EMPLOYEE -->
+
+<div
+class="nav employee-only"
+onclick="showSection('attendance',this)">
+
+🕐 My Attendance
+
+</div>
+
+
+<div
+class="nav employee-only"
+onclick="showSection('leave',this)">
+
+🏖️ Leave Request
+
+</div>
+
+
+<div
+class="nav employee-only"
+onclick="showSection('payroll',this)">
+
+💰 My Payroll
+
+</div>
+
+
+<!-- HR -->
+
+<div
+class="nav hr-only"
+onclick="showSection('addEmployee',this)">
+
+➕ Add Employee
+
+</div>
+
+
+<div
+class="nav hr-only"
+onclick="showSection('employees',this)">
+
+👥 Employees
+
+</div>
+
+
+<div
+class="nav hr-only"
+onclick="showSection('hrAttendance',this)">
+
+🕐 Attendance
+
+</div>
+
+
+<div
+class="nav hr-only"
+onclick="showSection('leaveApproval',this)">
+
+✅ Leave Approval
+
+</div>
+
+
+<div
+class="nav hr-only"
+onclick="showSection('hrPayroll',this)">
+
+💵 Payroll
+
+</div>
+
+
+<div
+class="logout"
+onclick="logout()">
+
+🚪 Logout
+
+</div>
+
+</aside>
+
+
+<!-- MAIN -->
+
+<main class="main">
+
+
+<!-- TOP BAR -->
+
+<div class="topbar">
+
+<div>
+
+<h2 id="pageTitle">
+Dashboard
+</h2>
+
+<small id="dateText"></small>
+
+</div>
+
+
+<div class="user">
+
+<div
+class="avatar"
+id="avatar">
+U
+</div>
+
+<div>
+
+<b id="userName">
+User
+</b>
+
+<small
+id="userRole"
+style="display:block;color:#777">
+
+Role
+
+</small>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+DASHBOARD
+===================================================== -->
+
+<section
+id="dashboard"
+class="section active">
+
+<h2 style="margin-bottom:20px">
+
+Welcome to Dayflow 👋
+
+</h2>
+
+
+<!-- EMPLOYEE DASHBOARD -->
+
+<div
+id="employeeDashboard"
+class="cards">
+
+<div class="card">
+
+<div class="card-title">
+Employee ID
+</div>
+
+<div
+class="card-value"
+id="dashId">
+-
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="card-title">
+Present Days
+</div>
+
+<div
+class="card-value"
+id="dashPresent">
+0
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="card-title">
+Leave Requests
+</div>
+
+<div
+class="card-value"
+id="dashLeave">
+0
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="card-title">
+Salary
+</div>
+
+<div
+class="card-value"
+id="dashSalary">
+₹0
+</div>
+
+</div>
+
+</div>
+
+
+<!-- HR DASHBOARD -->
+
+<div
+id="hrDashboard"
+class="cards"
+style="display:none">
+
+<div class="card">
+
+<div class="card-title">
+Total Employees
+</div>
+
+<div
+class="card-value"
+id="totalEmployees">
+0
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="card-title">
+Present Today
+</div>
+
+<div
+class="card-value"
+id="presentToday">
+0
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="card-title">
+Pending Leaves
+</div>
+
+<div class="card-value"
+id="pendingLeaves">
+0
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="card-title">
+Total Payroll
+</div>
+
+<div
+class="card-value"
+id="totalPayroll">
+₹0
+</div>
+
+</div>
+
+</div>
+
+
+<div class="panel">
+
+<h3>
+Dayflow HRMS
+</h3>
+
+<p>
+Human Resource Management System for employees and HR officers.
+</p>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+PROFILE
+===================================================== -->
+
+<section
+id="profile"
+class="section">
+
+<h2 style="margin-bottom:20px">
+My Profile
+</h2>
+
+
+<div class="panel">
+
+<div class="profile-grid">
+
+<div class="info">
+
+<small>
+Employee ID
+</small>
+
+<strong id="pId">
+-
+</strong>
+
+</div>
+
+
+<div class="info">
+
+<small>
+Name
+</small>
+
+<strong id="pName">
+-
+</strong>
+
+</div>
+
+
+<div class="info">
+
+<small>
+Email
+</small>
+
+<strong id="pEmail">
+-
+</strong>
+
+</div>
+
+
+<div class="info">
+
+<small>
+Department
+</small>
+
+<strong id="pDepartment">
+-
+</strong>
+
+</div>
+
+
+<div class="info">
+
+<small>
+Designation
+</small>
+
+<strong id="pDesignation">
+-
+</strong>
+
+</div>
+
+
+<div class="info">
+
+<small>
+Phone
+</small>
+
+<strong id="pPhone">
+-
+</strong>
+
+</div>
+
+
+<div class="info">
+
+<small>
+Role
+</small>
+
+<strong id="pRole">
+-
+</strong>
+
+</div>
+
+
+<div class="info">
+
+<small>
+Salary
+</small>
+
+<strong id="pSalary">
+-
+</strong>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+EMPLOYEE ATTENDANCE
+===================================================== -->
+
+<section
+id="attendance"
+class="section">
+
+<h2 style="margin-bottom:20px">
+My Attendance
+</h2>
+
+
+<div class="attendance-box">
+
+
+<div class="card">
+
+<div class="card-title">
+Check In
+</div>
+
+<div
+class="big-time"
+id="todayCheckIn">
+--
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="card-title">
+Check Out
+</div>
+
+<div
+class="big-time"
+id="todayCheckOut">
+--
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="card-title">
+Status
+</div>
+
+<div
+class="big-time"
+id="todayStatus">
+Not Checked
+</div>
+
+</div>
+
+</div>
+
+
+<div class="panel">
+
+<h3>
+Today's Attendance
+</h3>
+
+<p style="color:#777;margin-bottom:18px">
+
+Check In when you arrive.
+
+<br>
+
+Check Out when you leave.
+
+</p>
+
+
+<div class="button-area">
+
+<button
+id="checkInBtn"
+class="btn success"
+onclick="checkIn()">
+
+🟢 Check In
+
+</button>
+
+
+<button
+id="checkOutBtn"
+class="btn danger"
+onclick="checkOut()"
+disabled>
+
+🔴 Check Out
+
+</button>
+
+</div>
+
+</div>
+
+
+<div class="panel">
+
+<h3>
+Attendance History
+</h3>
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Date</th>
+
+<th>Check In</th>
+
+<th>Check Out</th>
+
+<th>Status</th>
+
+</tr>
+
+</thead>
+
+<tbody
+id="myAttendance">
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+LEAVE
+===================================================== -->
+
+<section
+id="leave"
+class="section">
+
+<h2 style="margin-bottom:20px">
+Leave & Time-Off
+</h2>
+
+
+<div class="panel">
+
+<h3>
+Apply for Leave
+</h3>
+
+
+<div id="leaveMessage"></div>
+
+
+<form id="leaveForm">
+
+
+<div class="form-group">
+
+<label>
+Leave Type
+</label>
+
+<select
+id="leaveType"
+required>
+
+<option value="">
+Select Leave Type
+</option>
+
+<option value="Paid Leave">
+Paid Leave
+</option>
+
+<option value="Sick Leave">
+Sick Leave
+</option>
+
+<option value="Unpaid Leave">
+Unpaid Leave
+</option>
+
+</select>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+From Date
+</label>
+
+<input
+type="date"
+id="leaveFrom"
+required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+To Date
+</label>
+
+<input
+type="date"
+id="leaveTo"
+required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Remarks
+</label>
+
+<textarea
+id="leaveReason"
+rows="4"
+placeholder="Enter reason"
+required>
+</textarea>
+
+</div>
+
+
+<button
+type="submit"
+class="btn primary">
+
+📨 Submit Leave Request
+
+</button>
+
+</form>
+
+</div>
+
+
+<div class="panel">
+
+<h3>
+My Leave Requests
+</h3>
+
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Type</th>
+<th>From</th>
+<th>To</th>
+<th>Reason</th>
+<th>Status</th>
+<th>HR Comment</th>
+
+</tr>
+
+</thead>
+
+<tbody id="myLeaves">
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+EMPLOYEE PAYROLL
+===================================================== -->
+
+<section
+id="payroll"
+class="section">
+
+<h2 style="margin-bottom:20px">
+My Payroll
+</h2>
+
+
+<div class="cards">
+
+<div class="card">
+
+<div class="card-title">
+Basic
+</div>
+
+<div
+class="card-value"
+id="myBasic">
+₹0
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="card-title">
+Allowance
+</div>
+
+<div
+class="card-value"
+id="myAllowance">
+₹0
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="card-title">
+Deduction
+</div>
+
+<div
+class="card-value"
+id="myDeduction">
+₹0
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="card-title">
+Net Salary
+</div>
+
+<div
+class="card-value"
+id="myNet">
+₹0
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+ADD EMPLOYEE
+===================================================== -->
+
+<section
+id="addEmployee"
+class="section">
+
+<h2 style="margin-bottom:20px">
+Add Employee
+</h2>
+
+
+<div class="panel">
+
+<h3>
+Create Employee Account
+</h3>
+
+
+<div id="employeeMessage"></div>
+
+
+<form id="employeeForm">
+
+
+<div class="form-group">
+
+<label>
+Employee ID
+</label>
+
+<input
+id="empId"
+placeholder="EMP001"
+required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Full Name
+</label>
+
+<input
+id="empName"
+placeholder="Employee Name"
+required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Email
+</label>
+
+<input
+type="email"
+id="empEmail"
+placeholder="employee@gmail.com"
+required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Password
+</label>
+
+<input
+id="empPassword"
+placeholder="Employee password"
+required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Department
+</label>
+
+<select
+id="empDepartment"
+required>
+
+<option value="">
+Select Department
+</option>
+
+<option>
+Engineering
+</option>
+
+<option>
+IT
+</option>
+
+<option>
+Finance
+</option>
+
+<option>
+Marketing
+</option>
+
+<option>
+Sales
+</option>
+
+<option>
+Human Resources
+</option>
+
+</select>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Designation
+</label>
+
+<input
+id="empDesignation"
+placeholder="Software Engineer"
+required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Phone
+</label>
+
+<input
+id="empPhone"
+placeholder="9876543210">
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Salary
+</label>
+
+<input
+type="number"
+id="empSalary"
+placeholder="40000"
+required>
+
+</div>
+
+
+<button
+type="submit"
+class="btn primary">
+
+➕ Create Employee & Send Email
+
+</button>
+
+</form>
+
+
+<div class="email-info">
+
+📧 After creating the employee, Dayflow will send an invitation email to the employee's email address.
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+EMPLOYEES
+===================================================== -->
+
+<section
+id="employees"
+class="section">
+
+<h2 style="margin-bottom:20px">
+Employees
+</h2>
+
+
+<div class="panel">
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>ID</th>
+<th>Name</th>
+<th>Email</th>
+<th>Department</th>
+<th>Designation</th>
+<th>Salary</th>
+
+</tr>
+
+</thead>
+
+<tbody
+id="employeeTable">
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+HR ATTENDANCE
+===================================================== -->
+
+<section
+id="hrAttendance"
+class="section">
+
+<h2 style="margin-bottom:20px">
+Attendance Records
+</h2>
+
+
+<div class="panel">
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Employee ID</th>
+<th>Name</th>
+<th>Date</th>
+<th>Check In</th>
+<th>Check Out</th>
+<th>Status</th>
+
+</tr>
+
+</thead>
+
+<tbody
+id="hrAttendanceTable">
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+LEAVE APPROVAL
+===================================================== -->
+
+<section
+id="leaveApproval"
+class="section">
+
+<h2 style="margin-bottom:20px">
+Leave Approval
+</h2>
+
+
+<div class="panel">
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Employee</th>
+<th>ID</th>
+<th>Type</th>
+<th>From</th>
+<th>To</th>
+<th>Reason</th>
+<th>Status</th>
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody
+id="leaveApprovalTable">
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+HR PAYROLL
+===================================================== -->
+
+<section
+id="hrPayroll"
+class="section">
+
+<h2 style="margin-bottom:20px">
+Payroll Management
+</h2>
+
+
+<div class="panel">
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>ID</th>
+<th>Name</th>
+<th>Basic</th>
+<th>Allowance</th>
+<th>Deduction</th>
+<th>Net Salary</th>
+
+</tr>
+
+</thead>
+
+<tbody
+id="hrPayrollTable">
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+</main>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+EMAILJS CONFIGURATION
+===================================================== */
+
+/*
+    IMPORTANT:
+
+    Replace these 3 values with your EmailJS values.
+
+    1. YOUR_PUBLIC_KEY
+    2. YOUR_SERVICE_ID
+    3. YOUR_TEMPLATE_ID
+*/
+
+const EMAILJS_PUBLIC_KEY =
+"YOUR_PUBLIC_KEY";
+
+const EMAILJS_SERVICE_ID =
+"YOUR_SERVICE_ID";
+
+const EMAILJS_TEMPLATE_ID =
+"YOUR_TEMPLATE_ID";
+
+
+/*
+    Initialize EmailJS
+*/
+
+if(
+EMAILJS_PUBLIC_KEY !== "YOUR_PUBLIC_KEY"
+){
+
+emailjs.init({
+
+publicKey:
+EMAILJS_PUBLIC_KEY
+
+});
+
+}
+
+
+/* =====================================================
+DAYFLOW DATA
+===================================================== */
+
+let users =
+JSON.parse(
+localStorage.getItem(
+"dayflow_users"
+)
+) || [
+
+{
+    id:"HR001",
+
+    name:"Dayflow HR",
+
+    email:"hr@dayflow.com",
+
+    password:"hr123",
+
+    role:"hr",
+
+    department:"Human Resources",
+
+    designation:"HR Officer",
+
+    phone:"9876543210",
+
+    salary:60000
+}
+
+];
+
+
+let attendance =
+JSON.parse(
+localStorage.getItem(
+"dayflow_attendance"
+)
+) || [];
+
+
+let leaves =
+JSON.parse(
+localStorage.getItem(
+"dayflow_leaves"
+)
+) || [];
+
+
+let currentUser =
+JSON.parse(
+sessionStorage.getItem(
+"dayflow_current"
+)
+) || null;
+
+
+/* =====================================================
+PORTAL LINK
+===================================================== */
+
+/*
+    IMPORTANT:
+
+    Replace this with your actual
+    GitHub Pages URL.
+
+    Example:
+
+    https://2k25ecx48-sudo.github.io/Sarvesh/
+*/
+
+const EMPLOYEE_PORTAL =
+"https://2k25ecx48-sudo.github.io/Sarvesh/";
+
+
+/* =====================================================
+PAGE LOAD
+===================================================== */
+
+window.onload=function(){
+
+document.getElementById(
+"dateText"
+).innerText =
+new Date().toLocaleDateString(
+"en-IN",
+{
+    weekday:"long",
+    year:"numeric",
+    month:"long",
+    day:"numeric"
+}
+);
+
+
+if(currentUser){
+
+openApp();
+
+}
+
+};
+
+
+/* =====================================================
+LOGIN
+===================================================== */
+
+document.getElementById(
+"loginForm"
+).addEventListener(
+"submit",
+function(e){
+
+e.preventDefault();
+
+
+const email =
+document.getElementById(
+"email"
+).value
+.trim()
+.toLowerCase();
+
+
+const password =
+document.getElementById(
+"password"
+).value;
+
+
+const user =
+users.find(
+u =>
+u.email.toLowerCase()===email &&
+u.password===password
+);
+
+
+if(!user){
+
+document.getElementById(
+"loginMessage"
+).innerHTML=`
+
+<div class="error">
+
+❌ Incorrect email or password
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+currentUser=user;
+
+
+sessionStorage.setItem(
+"dayflow_current",
+JSON.stringify(
+currentUser
+)
+);
+
+
+openApp();
+
+}
+);
+
+
+/* =====================================================
+OPEN APP
+===================================================== */
+
+function openApp(){
+
+document.getElementById(
+"loginPage"
+).style.display="none";
+
+
+document.getElementById(
+"app"
+).style.display="block";
+
+
+setupMenu();
+
+updateHeader();
+
+updateProfile();
+
+updateDashboard();
+
+updateAttendance();
+
+updateLeaves();
+
+updateEmployees();
+
+updateHRAttendance();
+
+updateLeaveApproval();
+
+updatePayroll();
+
+}
+
+
+/* =====================================================
+MENU
+===================================================== */
+
+function setupMenu(){
+
+const isHR =
+currentUser.role==="hr";
+
+
+document.querySelectorAll(
+".hr-only"
+)
+.forEach(
+x=>{
+x.style.display =
+isHR
+?"block"
+:"none";
+}
+);
+
+
+document.querySelectorAll(
+".employee-only"
+)
+.forEach(
+x=>{
+x.style.display =
+isHR
+?"none"
+:"block";
+}
+);
+
+
+document.getElementById(
+"employeeDashboard"
+).style.display =
+isHR
+?"none"
+:"grid";
+
+
+document.getElementById(
+"hrDashboard"
+).style.display =
+isHR
+?"grid"
+:"none";
+
+}
+
+
+/* =====================================================
+HEADER
+===================================================== */
+
+function updateHeader(){
+
+document.getElementById(
+"userName"
+).innerText =
+currentUser.name;
+
+
+document.getElementById(
+"userRole"
+).innerText =
+currentUser.role==="hr"
+?
+"Admin / HR Officer"
+:
+"Employee";
+
+
+const initials =
+currentUser.name
+.split(" ")
+.map(x=>x[0])
+.join("")
+.substring(0,2)
+.toUpperCase();
+
+
+document.getElementById(
+"avatar"
+).innerText =
+initials;
+
+}
+
+
+/* =====================================================
+SECTION
+===================================================== */
+
+function showSection(
+id,
+element
+){
+
+document.querySelectorAll(
+".section"
+)
+.forEach(
+s=>{
+s.classList.remove(
+"active"
+);
+}
+);
+
+
+document.getElementById(
+id
+).classList.add(
+"active"
+);
+
+
+document.querySelectorAll(
+".nav"
+)
+.forEach(
+n=>{
+n.classList.remove(
+"active"
+);
+}
+);
+
+
+element.classList.add(
+"active"
+);
+
+
+const names={
+
+dashboard:"Dashboard",
+
+profile:"My Profile",
+
+attendance:"My Attendance",
+
+leave:"Leave Request",
+
+payroll:"My Payroll",
+
+addEmployee:"Add Employee",
+
+employees:"Employees",
+
+hrAttendance:"Attendance Records",
+
+leaveApproval:"Leave Approval",
+
+hrPayroll:"Payroll Management"
+
+};
+
+
+document.getElementById(
+"pageTitle"
+).innerText =
+names[id];
+
+}
+
+
+/* =====================================================
+PROFILE
+===================================================== */
+
+function updateProfile(){
+
+document.getElementById(
+"pId"
+).innerText =
+currentUser.id;
+
+
+document.getElementById(
+"pName"
+).innerText =
+currentUser.name;
+
+
+document.getElementById(
+"pEmail"
+).innerText =
+currentUser.email;
+
+
+document.getElementById(
+"pDepartment"
+).innerText =
+currentUser.department || "-";
+
+
+document.getElementById(
+"pDesignation"
+).innerText =
+currentUser.designation || "-";
+
+
+document.getElementById(
+"pPhone"
+).innerText =
+currentUser.phone || "-";
+
+
+document.getElementById(
+"pRole"
+).innerText =
+currentUser.role==="hr"
+?
+"Admin / HR Officer"
+:
+"Employee";
+
+
+document.getElementById(
+"pSalary"
+).innerText =
+money(currentUser.salary);
+
+}
+
+
+/* =====================================================
+DASHBOARD
+===================================================== */
+
+function updateDashboard(){
+
+if(currentUser.role==="hr"){
+
+const employees =
+users.filter(
+u=>u.role==="employee"
+);
+
+
+document.getElementById(
+"totalEmployees"
+).innerText =
+employees.length;
+
+
+const today =
+getToday();
+
+
+document.getElementById(
+"presentToday"
+).innerText =
+attendance.filter(
+a =>
+a.date===today &&
+a.status==="Present"
+).length;
+
+
+document.getElementById(
+"pendingLeaves"
+).innerText =
+leaves.filter(
+l =>
+l.status==="Pending"
+).length;
+
+
+document.getElementById(
+"totalPayroll"
+).innerText =
+money(
+employees.reduce(
+(sum,e)=>
+sum+
+Number(e.salary||0),
+0
+)
+);
+
+}
+else{
+
+const mine =
+attendance.filter(
+a =>
+a.employeeId===
+currentUser.id
+);
+
+
+document.getElementById(
+"dashId"
+).innerText =
+currentUser.id;
+
+
+document.getElementById(
+"dashPresent"
+).innerText =
+mine.filter(
+a =>
+a.status==="Present"
+).length;
+
+
+document.getElementById(
+"dashLeave"
+).innerText =
+leaves.filter(
+l =>
+l.employeeId===
+currentUser.id
+).length;
+
+
+document.getElementById(
+"dashSalary"
+).innerText =
+money(
+currentUser.salary
+);
+
+}
+
+}
+
+
+/* =====================================================
+TODAY
+===================================================== */
+
+function getToday(){
+
+const d =
+new Date();
+
+
+return d.getFullYear()
++
+"-"
++
+String(
+d.getMonth()+1
+).padStart(2,"0")
++
+"-"
++
+String(
+d.getDate()
+).padStart(2,"0");
+
+}
+
+
+/* =====================================================
+GET TODAY ATTENDANCE
+===================================================== */
+
+function getTodayRecord(){
+
+return attendance.find(
+a =>
+a.employeeId===
+currentUser.id &&
+a.date===
+getToday()
+);
+
+}
+
+
+/* =====================================================
+CHECK IN
+===================================================== */
+
+function checkIn(){
+
+const existing =
+getTodayRecord();
+
+
+if(existing){
+
+alert(
+"You have already checked in today."
+);
+
+return;
+
+}
+
+
+const now =
+new Date();
+
+
+const record={
+
+id:Date.now(),
+
+employeeId:
+currentUser.id,
+
+employeeName:
+currentUser.name,
+
+date:
+getToday(),
+
+checkIn:
+now.toLocaleTimeString(
+"en-IN",
+{
+    hour:"2-digit",
+    minute:"2-digit",
+    second:"2-digit",
+    hour12:true
+}
+),
+
+checkOut:"",
+
+status:"Present"
+
+};
+
+
+attendance.push(
+record
+);
+
+
+localStorage.setItem(
+"dayflow_attendance",
+JSON.stringify(
+attendance
+)
+);
+
+
+updateAttendance();
+
+updateDashboard();
+
+updateHRAttendance();
+
+
+alert(
+"✅ Check In recorded successfully!"
+);
+
+}
+
+
+/* =====================================================
+CHECK OUT
+===================================================== */
+
+function checkOut(){
+
+const record =
+getTodayRecord();
+
+
+if(!record){
+
+alert(
+"⚠️ Please Check In first."
+);
+
+return;
+
+}
+
+
+if(record.checkOut){
+
+alert(
+"You have already checked out today."
+);
+
+return;
+
+}
+
+
+const now =
+new Date();
+
+
+record.checkOut =
+now.toLocaleTimeString(
+"en-IN",
+{
+    hour:"2-digit",
+    minute:"2-digit",
+    second:"2-digit",
+    hour12:true
+}
+);
+
+
+localStorage.setItem(
+"dayflow_attendance",
+JSON.stringify(
+attendance
+)
+);
+
+
+updateAttendance();
+
+updateDashboard();
+
+updateHRAttendance();
+
+
+alert(
+"✅ Check Out recorded successfully!"
+);
+
+}
+
+
+/* =====================================================
+UPDATE ATTENDANCE
+===================================================== */
+
+function updateAttendance(){
+
+if(
+currentUser.role!=="employee"
+)
+return;
+
+
+const today =
+getTodayRecord();
+
+
+document.getElementById(
+"todayCheckIn"
+).innerText =
+today?.checkIn || "--";
+
+
+document.getElementById(
+"todayCheckOut"
+).innerText =
+today?.checkOut || "--";
+
+
+document.getElementById(
+"todayStatus"
+).innerText =
+today
+?
+today.status
+:
+"Not Checked";
+
+
+const checkInBtn =
+document.getElementById(
+"checkInBtn"
+);
+
+
+const checkOutBtn =
+document.getElementById(
+"checkOutBtn"
+);
+
+
+if(!today){
+
+checkInBtn.disabled=false;
+
+checkOutBtn.disabled=true;
+
+}
+
+else if(
+!today.checkOut
+){
+
+checkInBtn.disabled=true;
+
+checkOutBtn.disabled=false;
+
+}
+
+else{
+
+checkInBtn.disabled=true;
+
+checkOutBtn.disabled=true;
+
+}
+
+
+const mine =
+attendance.filter(
+a =>
+a.employeeId===
+currentUser.id
+);
+
+
+const tbody =
+document.getElementById(
+"myAttendance"
+);
+
+
+if(mine.length===0){
+
+tbody.innerHTML=`
+
+<tr>
+
+<td colspan="4">
+No attendance records yet.
+</td>
+
+</tr>
+
+`;
+
+return;
+
+}
+
+
+tbody.innerHTML =
+mine
+.slice()
+.reverse()
+.map(
+a=>`
+
+<tr>
+
+<td>
+${a.date}
+</td>
+
+<td>
+${a.checkIn || "--"}
+</td>
+
+<td>
+${a.checkOut || "--"}
+</td>
+
+<td>
+
+<span class="status present">
+${a.status}
+</span>
+
+</td>
+
+</tr>
+
+`
+)
+.join("");
+
+}
+
+
+/* =====================================================
+LEAVE APPLY
+===================================================== */
+
+document.getElementById(
+"leaveForm"
+).addEventListener(
+"submit",
+function(e){
+
+e.preventDefault();
+
+
+const type =
+document.getElementById(
+"leaveType"
+).value;
+
+
+const from =
+document.getElementById(
+"leaveFrom"
+).value;
+
+
+const to =
+document.getElementById(
+"leaveTo"
+).value;
+
+
+const reason =
+document.getElementById(
+"leaveReason"
+).value
+.trim();
+
+
+if(to<from){
+
+alert(
+"⚠️ To Date cannot be before From Date."
+);
+
+return;
+
+}
+
+
+const request={
+
+id:Date.now(),
+
+employeeId:
+currentUser.id,
+
+employeeName:
+currentUser.name,
+
+type:type,
+
+from:from,
+
+to:to,
+
+reason:reason,
+
+status:"Pending",
+
+comment:
+"Waiting for HR approval"
+
+};
+
+
+leaves.push(
+request
+);
+
+
+localStorage.setItem(
+"dayflow_leaves",
+JSON.stringify(
+leaves
+)
+);
+
+
+document.getElementById(
+"leaveForm"
+).reset();
+
+
+document.getElementById(
+"leaveMessage"
+).innerHTML=`
+
+<div class="success-msg">
+
+📨 Leave request submitted successfully.
+
+<br>
+
+Status:
+<b>Pending</b>
+
+</div>
+
+`;
+
+
+updateLeaves();
+
+updateDashboard();
+
+updateLeaveApproval();
+
+}
+);
+
+
+/* =====================================================
+MY LEAVES
+===================================================== */
+
+function updateLeaves(){
+
+if(
+currentUser.role!=="employee"
+)
+return;
+
+
+const mine =
+leaves.filter(
+l =>
+l.employeeId===
+currentUser.id
+);
+
+
+const tbody =
+document.getElementById(
+"myLeaves"
+);
+
+
+if(mine.length===0){
+
+tbody.innerHTML=`
+
+<tr>
+
+<td colspan="6">
+No leave requests yet.
+</td>
+
+</tr>
+
+`;
+
+return;
+
+}
+
+
+tbody.innerHTML =
+mine
+.slice()
+.reverse()
+.map(
+l=>`
+
+<tr>
+
+<td>
+${l.type}
+</td>
+
+<td>
+${l.from}
+</td>
+
+<td>
+${l.to}
+</td>
+
+<td>
+${l.reason}
+</td>
+
+<td>
+
+<span class="status ${getStatusClass(l.status)}">
+
+${l.status}
+
+</span>
+
+</td>
+
+<td>
+${l.comment || "-"}
+</td>
+
+</tr>
+
+`
+)
+.join("");
+
+}
+
+
+/* =====================================================
+HR LEAVE APPROVAL
+===================================================== */
+
+function updateLeaveApproval(){
+
+if(
+currentUser.role!=="hr"
+)
+return;
+
+
+const tbody =
+document.getElementById(
+"leaveApprovalTable"
+);
+
+
+if(leaves.length===0){
+
+tbody.innerHTML=`
+
+<tr>
+
+<td colspan="8">
+No leave requests.
+</td>
+
+</tr>
+
+`;
+
+return;
+
+}
+
+
+tbody.innerHTML =
+leaves
+.slice()
+.reverse()
+.map(
+l=>`
+
+<tr>
+
+<td>
+${l.employeeName}
+</td>
+
+<td>
+${l.employeeId}
+</td>
+
+<td>
+${l.type}
+</td>
+
+<td>
+${l.from}
+</td>
+
+<td>
+${l.to}
+</td>
+
+<td>
+${l.reason}
+</td>
+
+<td>
+
+<span class="status ${getStatusClass(l.status)}">
+
+${l.status}
+
+</span>
+
+</td>
+
+<td>
+
+${
+l.status==="Pending"
+
+?
+
+`
+
+<button
+class="btn success"
+onclick="approveLeave(${l.id})">
+
+Approve
+
+</button>
+
+<button
+class="btn danger"
+onclick="rejectLeave(${l.id})">
+
+Reject
+
+</button>
+
+`
+
+:
+
+`
+
+<small>
+${l.comment}
+</small>
+
+`
+
+}
+
+</td>
+
+</tr>
+
+`
+)
+.join("");
+
+}
+
+
+/* =====================================================
+APPROVE
+===================================================== */
+
+function approveLeave(id){
+
+const leave =
+leaves.find(
+l=>l.id===id
+);
+
+
+if(!leave)
+return;
+
+
+leave.status =
+"Approved";
+
+
+leave.comment =
+"Approved by HR";
+
+
+localStorage.setItem(
+"dayflow_leaves",
+JSON.stringify(
+leaves
+)
+);
+
+
+updateLeaveApproval();
+
+updateDashboard();
+
+
+alert(
+"✅ Leave request approved."
+);
+
+}
+
+
+/* =====================================================
+REJECT
+===================================================== */
+
+function rejectLeave(id){
+
+const leave =
+leaves.find(
+l=>l.id===id
+);
+
+
+if(!leave)
+return;
+
+
+leave.status =
+"Rejected";
+
+
+leave.comment =
+"Rejected by HR";
+
+
+localStorage.setItem(
+"dayflow_leaves",
+JSON.stringify(
+leaves
+)
+);
+
+
+updateLeaveApproval();
+
+updateDashboard();
+
+
+alert(
+"❌ Leave request rejected."
+);
+
+}
+
+
+/* =====================================================
+ADD EMPLOYEE
+===================================================== */
+
+document.getElementById(
+"employeeForm"
+).addEventListener(
+"submit",
+function(e){
+
+e.preventDefault();
+
+
+const id =
+document.getElementById(
+"empId"
+).value.trim();
+
+
+const name =
+document.getElementById(
+"empName"
+).value.trim();
+
+
+const email =
+document.getElementById(
+"empEmail"
+).value
+.trim()
+.toLowerCase();
+
+
+const password =
+document.getElementById(
+"empPassword"
+).value;
+
+
+const department =
+document.getElementById(
+"empDepartment"
+).value;
+
+
+const designation =
+document.getElementById(
+"empDesignation"
+).value;
+
+
+const phone =
+document.getElementById(
+"empPhone"
+).value;
+
+
+const salary =
+Number(
+document.getElementById(
+"empSalary"
+).value
+);
+
+
+if(
+users.some(
+u =>
+u.id.toLowerCase()===
+id.toLowerCase()
+)
+){
+
+document.getElementById(
+"employeeMessage"
+).innerHTML=`
+
+<div class="error">
+
+Employee ID already exists.
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+if(
+users.some(
+u =>
+u.email.toLowerCase()===
+email
+)
+){
+
+document.getElementById(
+"employeeMessage"
+).innerHTML=`
+
+<div class="error">
+
+Email already exists.
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+/*
+CREATE EMPLOYEE
+*/
+
+const newEmployee={
+
+id:id,
+
+name:name,
+
+email:email,
+
+password:password,
+
+role:"employee",
+
+department:department,
+
+designation:designation,
+
+phone:phone,
+
+salary:salary
+
+};
+
+
+users.push(
+newEmployee
+);
+
+
+localStorage.setItem(
+"dayflow_users",
+JSON.stringify(
+users
+)
+);
+
+
+/*
+SHOW SUCCESS
+*/
+
+document.getElementById(
+"employeeMessage"
+).innerHTML=`
+
+<div class="success-msg">
+
+✅ Employee account created.
+
+<br><br>
+
+<b>
+${name}
+</b>
+
+<br>
+
+Employee ID:
+${id}
+
+<br>
+
+Email:
+${email}
+
+<br><br>
+
+📧 Sending invitation email...
+
+</div>
+
+`;
+
+
+/*
+SEND EMAIL
+*/
+
+sendEmployeeEmail(
+newEmployee
+);
+
+
+/*
+RESET FORM
+*/
+
+document.getElementById(
+"employeeForm"
+).reset();
+
+
+updateEmployees();
+
+updateDashboard();
+
+updatePayroll();
+
+}
+);
+
+
+/* =====================================================
+SEND EMPLOYEE EMAIL
+===================================================== */
+
+function sendEmployeeEmail(
+employee
+){
+
+/*
+CHECK EMAILJS CONFIG
+*/
+
+if(
+EMAILJS_PUBLIC_KEY===
+"YOUR_PUBLIC_KEY" ||
+EMAILJS_SERVICE_ID===
+"YOUR_SERVICE_ID" ||
+EMAILJS_TEMPLATE_ID===
+"YOUR_TEMPLATE_ID"
+){
+
+alert(
+"⚠️ Employee created successfully.\n\n" +
+"EmailJS is not configured yet.\n\n" +
+"Add Public Key, Service ID and Template ID in the code."
+);
+
+return;
+
+}
+
+
+/*
+EMAIL PARAMETERS
+
+These names MUST match
+your EmailJS template variables.
+*/
+
+const templateParams={
+
+to_email:
+employee.email,
+
+employee_name:
+employee.name,
+
+employee_id:
+employee.id,
+
+employee_email:
+employee.email,
+
+employee_password:
+employee.password,
+
+department:
+employee.department,
+
+designation:
+employee.designation,
+
+portal_link:
+EMPLOYEE_PORTAL
+
+};
+
+
+/*
+SEND EMAIL
+*/
+
+emailjs.send(
+
+EMAILJS_SERVICE_ID,
+
+EMAILJS_TEMPLATE_ID,
+
+templateParams
+
+)
+
+.then(
+function(response){
+
+console.log(
+"Email sent successfully:",
+response.status,
+response.text
+);
+
+
+document.getElementById(
+"employeeMessage"
+).innerHTML=`
+
+<div class="success-msg">
+
+✅ Employee created successfully.
+
+<br><br>
+
+📧 Invitation email sent to:
+
+<b>
+${employee.email}
+</b>
+
+<br><br>
+
+Employee can click
+<b>
+"Open Dayflow Employee Portal"
+</b>
+inside the email.
+
+</div>
+
+`;
+
+}
+)
+
+.catch(
+function(error){
+
+console.error(
+"EmailJS error:",
+error
+);
+
+
+document.getElementById(
+"employeeMessage"
+).innerHTML=`
+
+<div class="error">
+
+Employee account was created,
+
+but the invitation email could not be sent.
+
+<br><br>
+
+Check your EmailJS
+Service ID / Template ID / Public Key.
+
+</div>
+
+`;
+
+}
+);
+
+}
+
+
+/* =====================================================
+EMPLOYEE TABLE
+===================================================== */
+
+function updateEmployees(){
+
+if(
+currentUser.role!=="hr"
+)
+return;
+
+
+const employees =
+users.filter(
+u =>
+u.role==="employee"
+);
+
+
+const tbody =
+document.getElementById(
+"employeeTable"
+);
+
+
+if(
+employees.length===0
+){
+
+tbody.innerHTML=`
+
+<tr>
+
+<td colspan="6">
+No employees added.
+</td>
+
+</tr>
+
+`;
+
+return;
+
+}
+
+
+tbody.innerHTML =
+employees
+.map(
+e=>`
+
+<tr>
+
+<td>
+${e.id}
+</td>
+
+<td>
+${e.name}
+</td>
+
+<td>
+${e.email}
+</td>
+
+<td>
+${e.department}
+</td>
+
+<td>
+${e.designation}
+</td>
+
+<td>
+${money(e.salary)}
+</td>
+
+</tr>
+
+`
+)
+.join("");
+
+}
+
+
+/* =====================================================
+HR ATTENDANCE
+===================================================== */
+
+function updateHRAttendance(){
+
+if(
+currentUser.role!=="hr"
+)
+return;
+
+
+const tbody =
+document.getElementById(
+"hrAttendanceTable"
+);
+
+
+if(
+attendance.length===0
+){
+
+tbody.innerHTML=`
+
+<tr>
+
+<td colspan="6">
+No attendance records.
+</td>
+
+</tr>
+
+`;
+
+return;
+
+}
+
+
+tbody.innerHTML =
+attendance
+.slice()
+.reverse()
+.map(
+a=>`
+
+<tr>
+
+<td>
+${a.employeeId}
+</td>
+
+<td>
+${a.employeeName}
+</td>
+
+<td>
+${a.date}
+</td>
+
+<td>
+${a.checkIn || "--"}
+</td>
+
+<td>
+${a.checkOut || "--"}
+</td>
+
+<td>
+
+<span class="status present">
+
+${a.status}
+
+</span>
+
+</td>
+
+</tr>
+
+`
+)
+.join("");
+
+}
+
+
+/* =====================================================
+PAYROLL
+===================================================== */
+
+function calculateSalary(
+salary
+){
+
+salary =
+Number(
+salary || 0
+);
+
+
+const basic =
+Math.round(
+salary * .75
+);
+
+
+const allowance =
+Math.round(
+salary * .20
+);
+
+
+const deduction =
+Math.round(
+salary * .05
+);
+
+
+const net =
+basic +
+allowance -
+deduction;
+
+
+return{
+
+basic,
+
+allowance,
+
+deduction,
+
+net
+
+};
+
+}
+
+
+/* =====================================================
+PAYROLL UPDATE
+===================================================== */
+
+function updatePayroll(){
+
+if(
+currentUser.role==="employee"
+){
+
+const s =
+calculateSalary(
+currentUser.salary
+);
+
+
+document.getElementById(
+"myBasic"
+).innerText =
+money(s.basic);
+
+
+document.getElementById(
+"myAllowance"
+).innerText =
+money(s.allowance);
+
+
+document.getElementById(
+"myDeduction"
+).innerText =
+money(s.deduction);
+
+
+document.getElementById(
+"myNet"
+).innerText =
+money(s.net);
+
+
+return;
+
+}
+
+
+const employees =
+users.filter(
+u =>
+u.role==="employee"
+);
+
+
+const tbody =
+document.getElementById(
+"hrPayrollTable"
+);
+
+
+if(
+employees.length===0
+){
+
+tbody.innerHTML=`
+
+<tr>
+
+<td colspan="6">
+No employees.
+</td>
+
+</tr>
+
+`;
+
+return;
+
+}
+
+
+tbody.innerHTML =
+employees
+.map(
+e=>{
+
+const s =
+calculateSalary(
+e.salary
+);
+
+
+return`
+
+<tr>
+
+<td>
+${e.id}
+</td>
+
+<td>
+${e.name}
+</td>
+
+<td>
+${money(s.basic)}
+</td>
+
+<td>
+${money(s.allowance)}
+</td>
+
+<td>
+${money(s.deduction)}
+</td>
+
+<td>
+<b>
+${money(s.net)}
+</b>
+</td>
+
+</tr>
+
+`;
+
+}
+)
+.join("");
+
+}
+
+
+/* =====================================================
+HELPERS
+===================================================== */
+
+function money(
+value
+){
+
+return "₹" +
+Number(
+value || 0
+).toLocaleString(
+"en-IN"
+);
+
+}
+
+
+function getStatusClass(
+status
+){
+
+if(
+status==="Approved"
+)
+return "approved";
+
+
+if(
+status==="Rejected"
+)
+return "rejected";
+
+
+return "pending";
+
+}
+
+
+/* =====================================================
+LOGOUT
+===================================================== */
+
+function logout(){
+
+sessionStorage.removeItem(
+"dayflow_current"
+);
+
+
+currentUser =
+null;
+
+
+document.getElementById(
+"app"
+).style.display =
+"none";
+
+
+document.getElementById(
+"loginPage"
+).style.display =
+"flex";
+
+
+document.getElementById(
+"loginForm"
+).reset();
+
+}
+
+</script>
+
+</body>
+</html>
